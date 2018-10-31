@@ -13,6 +13,7 @@ internal class LineDrawingLayer : ScrollableGraphViewDrawingLayer {
     init(frame: CGRect, lineWidth: CGFloat, lineColor: UIColor, lineStyle: ScrollableGraphViewLineStyle,lineStrokeStyle: ScrollableGraphViewLineStrokeStyle, lineJoin: String, lineCap: String, shouldFill: Bool, lineCurviness: CGFloat) {
         
         self.lineStyle = lineStyle
+        self.lineStrokeStyle = lineStrokeStyle
         self.shouldFill = shouldFill
         self.lineCurviness = lineCurviness
         
