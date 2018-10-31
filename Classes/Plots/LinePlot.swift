@@ -21,9 +21,19 @@ open class LinePlot : Plot {
             }
         }
     }
+
+    open var lineStrokeStyle_: Int {
+        get { return lineStrokeStyle.rawValue }
+        set {
+            if let enumValue = ScrollableGraphViewLineStrokeStyle(rawValue: newValue) {
+                lineStrokeStyle = enumValue
+            }
+        }
+    }
     
     /// Whether or not the line should be rendered using bezier curves are straight lines.
     open var lineStyle = ScrollableGraphViewLineStyle.straight
+    open var lineStrokeStyle = ScrollableGraphViewLineStrokeStyle.normal
     
     /// How each segment in the line should connect. Takes any of the Core Animation LineJoin values.
     open var lineJoin: String = convertFromCAShapeLayerLineJoin(CAShapeLayerLineJoin.round)
@@ -92,7 +102,7 @@ open class LinePlot : Plot {
     private func createLayers(viewport: CGRect) {
         
         // Create the line drawing layer.
-        lineLayer = LineDrawingLayer(frame: viewport, lineWidth: lineWidth, lineColor: lineColor, lineStyle: lineStyle, lineJoin: lineJoin, lineCap: lineCap, shouldFill: shouldFill, lineCurviness: lineCurviness)
+        lineLayer = LineDrawingLayer(frame: viewport, lineWidth: lineWidth, lineColor: lineColor, lineStyle: lineStyle, lineStrokeStyle: lineStrokeStyle, lineJoin: lineJoin, lineCap: lineCap, shouldFill: shouldFill, lineCurviness: lineCurviness)
         
         // Depending on whether we want to fill with solid or gradient, create the layer accordingly.
         
@@ -120,6 +130,11 @@ open class LinePlot : Plot {
 @objc public enum ScrollableGraphViewLineStyle : Int {
     case straight
     case smooth
+}
+
+@objc public enum ScrollableGraphViewLineStrokeStyle : Int {
+    case normal
+    case dashed
 }
 
 @objc public enum ScrollableGraphViewFillType : Int {

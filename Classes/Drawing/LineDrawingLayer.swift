@@ -6,10 +6,11 @@ internal class LineDrawingLayer : ScrollableGraphViewDrawingLayer {
     private var currentLinePath = UIBezierPath()
     
     private var lineStyle: ScrollableGraphViewLineStyle
+    private var lineStrokeStyle: ScrollableGraphViewLineStrokeStyle
     private var shouldFill: Bool
     private var lineCurviness: CGFloat
     
-    init(frame: CGRect, lineWidth: CGFloat, lineColor: UIColor, lineStyle: ScrollableGraphViewLineStyle, lineJoin: String, lineCap: String, shouldFill: Bool, lineCurviness: CGFloat) {
+    init(frame: CGRect, lineWidth: CGFloat, lineColor: UIColor, lineStyle: ScrollableGraphViewLineStyle,lineStrokeStyle: ScrollableGraphViewLineStrokeStyle, lineJoin: String, lineCap: String, shouldFill: Bool, lineCurviness: CGFloat) {
         
         self.lineStyle = lineStyle
         self.shouldFill = shouldFill
@@ -25,6 +26,11 @@ internal class LineDrawingLayer : ScrollableGraphViewDrawingLayer {
         
         // Setup
         self.fillColor = UIColor.clear.cgColor // This is handled by the fill drawing layer.
+
+        if lineStrokeStyle == .dashed {
+            self.lineDashPattern = [5.0, 5.0]
+            self.lineDashPhase = 0
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
