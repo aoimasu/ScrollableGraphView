@@ -34,8 +34,10 @@ class Examples : ScrollableGraphViewDataSource {
     // plot you want to display on the graph. However as this is showing
     // off many graphs with different plots, we are using one big switch
     // statement.
-    func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
-        
+    func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double? {
+        if pointIndex < 10 {
+            return nil
+        }
         switch(plot.identifier) {
             
         // Data for the graphs with a single plot
