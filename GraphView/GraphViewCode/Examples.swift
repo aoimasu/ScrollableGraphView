@@ -96,10 +96,10 @@ class Examples: ScrollableGraphViewDataSource {
         let graphView = ScrollableGraphView(frame: frame, dataSource: self)
 
         let linePlot = LinePlot(identifier: "simple") // Identifier should be unique for each plot.
-        let referenceLines = ReferenceLines()
+        let sep = SeparatorLines()
 
         graphView.addPlot(plot: linePlot)
-        graphView.addReferenceLines(referenceLines: referenceLines)
+        graphView.addSeparatorLines(separatorLines: sep)
 
         return graphView
     }
@@ -166,6 +166,23 @@ class Examples: ScrollableGraphViewDataSource {
         graphView.addPlot(plot: orangeLinePlot)
         graphView.addPlot(plot: orangeSquarePlot)
 
+        let sep = SeparatorLines()
+        sep.separatorLineColor = .white
+        sep.separatorLinePosition = numberOfDataItems - 4
+        sep.leftLabel = "Live"
+        sep.rightLabel = "Forecast"
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        label.text = "ALT"
+        label.textColor = UIColor.white
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        view.backgroundColor = .white
+        //view.addSubview(label)
+        sep.separatorLinePositionYLabel = view
+        sep.separatorLinePositionY = 21
+        
+        graphView.addSeparatorLines(separatorLines: sep)
+        
+        
         return graphView
     }
 

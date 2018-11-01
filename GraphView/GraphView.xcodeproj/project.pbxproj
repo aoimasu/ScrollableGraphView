@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E6F9A22218AC157008D72A9 /* SeparatorLineDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6F9A21218AC157008D72A9 /* SeparatorLineDrawingView.swift */; };
+		6E6F9A24218AC1BE008D72A9 /* SeparatorLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6F9A23218AC1BE008D72A9 /* SeparatorLines.swift */; };
 		E10847802129DAAA009A9586 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E108477F2129DAAA009A9586 /* LaunchScreen.storyboard */; };
 		E10847822129DAB5009A9586 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E10847812129DAB5009A9586 /* Main.storyboard */; };
 		E10847852129DC60009A9586 /* ScrollableGraphViewDrawingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FAD1D22129496E00FE8B13 /* ScrollableGraphViewDrawingDelegate.swift */; };
@@ -63,6 +65,8 @@
 
 /* Begin PBXFileReference section */
 		2918399E1C72E6A400753A45 /* GraphViewCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphViewCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E6F9A21218AC157008D72A9 /* SeparatorLineDrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLineDrawingView.swift; sourceTree = "<group>"; };
+		6E6F9A23218AC1BE008D72A9 /* SeparatorLines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLines.swift; sourceTree = "<group>"; };
 		E108477F2129DAAA009A9586 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E10847812129DAB5009A9586 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E10847A42129DC60009A9586 /* GraphViewIB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphViewIB.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +199,7 @@
 				E1FAD1CB2129496E00FE8B13 /* GradientDrawingLayer.swift */,
 				E1FAD1CE2129496E00FE8B13 /* LineDrawingLayer.swift */,
 				E1FAD1C92129496E00FE8B13 /* ReferenceLineDrawingView.swift */,
+				6E6F9A21218AC157008D72A9 /* SeparatorLineDrawingView.swift */,
 				E1FAD1CD2129496E00FE8B13 /* ScrollableGraphViewDrawingLayer.swift */,
 			);
 			path = Drawing;
@@ -213,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				E1FAD1D62129496E00FE8B13 /* LabelPool.swift */,
+				6E6F9A23218AC1BE008D72A9 /* SeparatorLines.swift */,
 				E1FAD1D52129496E00FE8B13 /* ReferenceLines.swift */,
 			);
 			path = Reference;
@@ -345,6 +351,7 @@
 				E1FAD1F02129496E00FE8B13 /* DotPlot.swift in Sources */,
 				E1FAD1E52129496E00FE8B13 /* FillDrawingLayer.swift in Sources */,
 				E1FAD1E62129496E00FE8B13 /* ScrollableGraphView.swift in Sources */,
+				6E6F9A24218AC1BE008D72A9 /* SeparatorLines.swift in Sources */,
 				E1FAD1C5212948E900FE8B13 /* AppDelegate.swift in Sources */,
 				E1FAD1E02129496E00FE8B13 /* BarDrawingLayer.swift in Sources */,
 				E168658C2129EBAD00041C08 /* ViewController.swift in Sources */,
@@ -361,6 +368,7 @@
 				E1FAD1E12129496E00FE8B13 /* GradientDrawingLayer.swift in Sources */,
 				E1FAD1E82129496E00FE8B13 /* ScrollableGraphViewDataSource.swift in Sources */,
 				E1FAD1C4212948E900FE8B13 /* GraphType.swift in Sources */,
+				6E6F9A22218AC157008D72A9 /* SeparatorLineDrawingView.swift in Sources */,
 				E1FAD1BF212948E900FE8B13 /* UIColor+colorFromHex.swift in Sources */,
 				E1FAD1DF2129496E00FE8B13 /* ReferenceLineDrawingView.swift in Sources */,
 			);

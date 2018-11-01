@@ -27,6 +27,8 @@ import UIKit
     @IBInspectable open var rightmostPointPadding: CGFloat = 50
     /// How much space should be between each data point.
     @IBInspectable open var dataPointSpacing: CGFloat = 40
+    /// index where today separator shown.
+    @IBInspectable open var showSeparatorAt: Int = -1
 
     @IBInspectable var direction_: Int {
         get { return direction.rawValue }
@@ -64,6 +66,7 @@ import UIKit
     // #######################
 
     var referenceLines: ReferenceLines?
+    var separatorLines: SeparatorLines?
 
     // MARK: - Private State
     // #####################
@@ -90,6 +93,7 @@ import UIKit
 
     // Reference Lines
     private var referenceLineView: ReferenceLineDrawingView?
+    private var separatorLineView: SeparatorLineDrawingView?
 
     // Labels
     private var labelsView = UIView()
@@ -157,6 +161,8 @@ import UIKit
         // Customise how the reference lines look in IB
         let referenceLines = ReferenceLines()
         self.addReferenceLines(referenceLines: referenceLines)
+        let separatorLines = SeparatorLines()
+        self.addSeparatorLines(separatorLines: separatorLines)
     }
 
     private func setup() {
@@ -248,6 +254,10 @@ import UIKit
         if(referenceLines != nil) {
             addReferenceViewDrawingView()
         }
+        
+        if(separatorLines != nil) {
+            addSeparatorViewDrawingView()
+        }
 
         // 7.
         // We're now done setting up, update the offsets and change the flag.
@@ -274,7 +284,33 @@ import UIKit
             }
         }
     }
-
+    
+    private func addSeparatorViewDrawingView() {
+        
+        guard let separatorLines = self.separatorLines else {
+            // We can want to add this if the settings arent nil.
+            return
+        }
+        
+        if(separatorLines.shouldShowSeparatorLines) {
+            separatorLines.separatorLinePositionX = calculatePosition(atIndex: separatorLines.separatorLinePosition, value: 0).x
+            let viewport = CGRect(x: 0, y: 0, width: viewportWidth, height: viewportHeight)
+            
+            separatorLineView?.removeFromSuperview()
+            separatorLineView = SeparatorLineDrawingView(
+                frame: viewport,
+                topMargin: topMargin,
+                bottomMargin: bottomMargin,
+                separatorLineColor: separatorLines.separatorLineColor,
+                separatorLineThickness: separatorLines.separatorLineThickness,
+                separatorLineSettings: separatorLines)
+            
+            separatorLineView?.set(range: self.range)
+            
+            self.addSubview(separatorLineView!)
+        }
+    }
+    
     private func addReferenceViewDrawingView() {
 
         guard let referenceLines = self.referenceLines else {
@@ -385,6 +421,8 @@ import UIKit
         updateOffsetsForGradients(offsetWidth: offsetWidth)
 
         referenceLineView?.frame.origin.x = offsetWidth
+        separatorLineView?.frame.origin.x = offsetWidth
+        separatorLineView?.set(offset: offsetWidth)
     }
 
     private func updateOffsetsForGradients(offsetWidth: CGFloat) {
@@ -411,6 +449,7 @@ import UIKit
 
         // Reference lines should extend over the entire viewport
         referenceLineView?.set(viewportWidth: viewportWidth, viewportHeight: viewportHeight)
+        separatorLineView?.set(viewportWidth: viewportWidth, viewportHeight: viewportHeight)
 
         self.contentSize.height = viewportHeight
     }
@@ -444,16 +483,28 @@ import UIKit
             addPlotToGraph(plot: plot, activePointsInterval: self.activePointsInterval)
         }
     }
-
+    
     public func addReferenceLines(referenceLines: ReferenceLines) {
-
+        
         // If we aren't setup yet, just save the reference lines and the setup will take care of it.
         if(isInitialSetup) {
             self.referenceLines = referenceLines
         }
-        // Otherwise, add the reference lines, reload everything.
+            // Otherwise, add the reference lines, reload everything.
         else {
             addReferenceLinesToGraph(referenceLines: referenceLines)
+        }
+    }
+    
+    public func addSeparatorLines(separatorLines: SeparatorLines) {
+        
+        // If we aren't setup yet, just save the separator lines and the setup will take care of it.
+        if(isInitialSetup) {
+            self.separatorLines = separatorLines
+        }
+            // Otherwise, add the separator lines, reload everything.
+        else {
+            addSeparatorLinesToGraph(separatorLines: separatorLines)
         }
     }
 
@@ -480,12 +531,19 @@ import UIKit
         initPlot(plot: plot, activePointsInterval: activePointsInterval)
         startAnimations(withStaggerValue: 0.15)
     }
-
+    
     private func addReferenceLinesToGraph(referenceLines: ReferenceLines) {
         self.referenceLines = referenceLines
         addReferenceViewDrawingView()
-
+        
         updateLabelsForCurrentInterval()
+    }
+    
+    private func addSeparatorLinesToGraph(separatorLines: SeparatorLines) {
+        self.separatorLines = separatorLines
+        addSeparatorViewDrawingView()
+        
+        //updateLabelsForCurrentInterval()
     }
 
     private func initPlot(plot: Plot, activePointsInterval: CountableRange<Int>) {
@@ -719,6 +777,7 @@ import UIKit
         }
 
         referenceLineView?.set(range: range)
+        separatorLineView?.set(range: range)
     }
 
     private func viewportDidChange() {
@@ -829,12 +888,24 @@ import UIKit
         // Have to ensure that the labels are added if we are supposed to be showing them.
         if let ref = self.referenceLines {
             if(ref.shouldShowLabels) {
-
+                
                 var activatedPoints: [Int] = []
                 for i in activePointsInterval {
                     activatedPoints.append(i)
                 }
-
+                
+                let filteredPoints = filterPointsForLabels(fromPoints: activatedPoints)
+                updateLabels(deactivatedPoints: filteredPoints, activatedPoints: filteredPoints)
+            }
+        }
+        if let refSep = self.separatorLines {
+            if(refSep.shouldShowLabels) {
+                
+                var activatedPoints: [Int] = []
+                for i in activePointsInterval {
+                    activatedPoints.append(i)
+                }
+                
                 let filteredPoints = filterPointsForLabels(fromPoints: activatedPoints)
                 updateLabels(deactivatedPoints: filteredPoints, activatedPoints: filteredPoints)
             }
