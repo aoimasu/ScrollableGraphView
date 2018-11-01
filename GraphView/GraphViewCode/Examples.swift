@@ -38,10 +38,7 @@ class Examples: ScrollableGraphViewDataSource {
         if pointIndex < 5 {
             return nil
         }
-        if pointIndex > numberOfDataItems - 5 {
-            return nil
-        }
-        if pointIndex >= 7 && pointIndex <= 9 {
+        if pointIndex > 7 && pointIndex <= 9 {
             return nil
         }
         switch(plot.identifier) {

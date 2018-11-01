@@ -27,6 +27,7 @@ class ViewController: UIViewController {
 
         examples = Examples()
         graphView = examples.createMultiPlotGraphOne(self.view.frame)
+        graphView.direction = .rightToLeft
 
         addReloadLabel(withText: "RELOAD")
         addLabel(withText: "MULTI 1")

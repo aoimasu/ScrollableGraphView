@@ -59,7 +59,8 @@ internal class LineDrawingLayer: ScrollableGraphViewDrawingLayer {
         // find first not nil point
         var firstNotNilPoint = owner.graphPoint(forIndex: activePointsInterval.lowerBound)
         var lastNotNilPoint = owner.graphPoint(forIndex: activePointsInterval.upperBound - 1)
-        for i in activePointsInterval.lowerBound ..< activePointsInterval.upperBound - 1 {
+        
+        for i in activePointsInterval.lowerBound ..< activePointsInterval.upperBound {
             let point = owner.graphPoint(forIndex: i)
             if point != nil && firstNotNilPoint == nil {
                 firstNotNilPoint = point
@@ -68,6 +69,7 @@ internal class LineDrawingLayer: ScrollableGraphViewDrawingLayer {
                 lastNotNilPoint = point
             }
         }
+        
         if (firstNotNilPoint == nil) {
             return currentLinePath
         }
@@ -87,15 +89,18 @@ internal class LineDrawingLayer: ScrollableGraphViewDrawingLayer {
         for i in activePointsInterval.lowerBound ..< activePointsInterval.upperBound - 1 {
             let startPoint = owner.graphPoint(forIndex: i)
             let endPoint = owner.graphPoint(forIndex: i+1)
-            if (startPoint != nil && endPoint == nil) {
+            if (startPoint != nil && endPoint == nil && shouldFill) {
                 lastNotNilDataPoint = CGPoint(x: startPoint!.location.x, y: zeroYPosition)
                 pathSegmentAdder(startPoint!.location, lastNotNilDataPoint!, currentLinePath)
             }
-            if (startPoint == nil && endPoint != nil) {
+            if (startPoint == nil && endPoint != nil && shouldFill) {
                 pathSegmentAdder(lastNotNilDataPoint!, CGPoint(x: endPoint!.location.x, y: zeroYPosition), currentLinePath)
                 pathSegmentAdder(CGPoint(x: endPoint!.location.x, y: zeroYPosition), endPoint!.location, currentLinePath)
             }
             if (startPoint != nil && endPoint != nil) {
+                if (!shouldFill) {
+                    currentLinePath.move(to: startPoint!.location)
+                }
                 pathSegmentAdder(startPoint!.location, endPoint!.location, currentLinePath)
             }
         }
